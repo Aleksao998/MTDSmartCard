@@ -24,12 +24,15 @@ const AppRoutes = (props) => {
   const [error, setError] = useState("");
   const [token, setToken] = useState(null);
   const [isAuth, setAuth] = useState(false);
+  const [isReg, setReg] = useState(false);
   const [userId, setUserId] = useState(null);
   const [loginButton, setLoginButton] = useState(false);
   const [buttonText, setButtonText] = useState("Login");
   const [editProfileFromMenu, setEditProfileFromMenu] = useState(0);
   const [pageChange, setPageChange] = React.useState(false);
   const [reload, setReload] = React.useState(false);
+  const [validateEmail, setValidateEmail] = useState("");
+  const [validatePass, setValidatePass] = useState("");
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     const expiryDate = localStorage.getItem("expiryDate");
@@ -72,7 +75,8 @@ const AppRoutes = (props) => {
     setToken(null);
     setAuth(false);
     setUserId(null);
-
+    setValidateEmail("");
+    setValidatePass("");
     localStorage.removeItem("store");
     localStorage.removeItem("token");
     localStorage.removeItem("expiryDate");
@@ -80,17 +84,22 @@ const AppRoutes = (props) => {
   };
   const login = (event, email, password) => {
     event.preventDefault();
+    setValidateEmail("has-success");
+    setValidatePass("has-success");
     if (email === "" || password === "") {
+      if (email === "") setValidateEmail("has-danger");
+      if (password === "") setValidatePass("has-danger");
       setError("All field must be filed!");
       return;
     }
     if (validator.isEmail(email) !== true) {
+      if (email === "") setValidateEmail("has-danger");
       setError("Email format is incorect");
       return;
     }
     setButtonText(null);
     setLoginButton(true);
-    fetch("http://192.168.0.32:3001/auth/login", {
+    fetch("http://192.168.0.120:3001/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -105,6 +114,8 @@ const AppRoutes = (props) => {
           throw new Error("Techical problems with server, please trt later!");
         }
         if (res.status === 401) {
+          setValidateEmail("has-danger");
+          setValidatePass("has-danger");
           throw new Error("Email or password are incorect!");
         }
         if (res.status === 429) {
@@ -157,9 +168,19 @@ const AppRoutes = (props) => {
   return (
     <div>
       {window.location.pathname.startsWith("/profile-page") &&
-      window.location.pathname.substring(14, window.location.pathname.length) !=
-        userId ? (
-        <NavBarProfile />
+      !isAuth &&
+      isReg ? (
+        <NavBarProfile
+          pageChange={pageChange}
+          setPageChange={setPageChange}
+          setEditProfileFromMenu={setEditProfileFromMenu}
+          isAuth={isAuth}
+          userId={userId}
+          logout={logoutHandler}
+          reload={reload}
+          setReload={setReload}
+          {...props}
+        />
       ) : (
         <NavBar
           pageChange={pageChange}
@@ -200,6 +221,7 @@ const AppRoutes = (props) => {
               userId={userId}
               setLocalStorage={setLocalStorage}
               reload={reload}
+              setReg={setReg}
             />
           )}
         />
@@ -265,6 +287,8 @@ const AppRoutes = (props) => {
               error={error}
               loginButton={loginButton}
               reload={reload}
+              validateEmail={validateEmail}
+              validatePass={validatePass}
             />
           )}
         />

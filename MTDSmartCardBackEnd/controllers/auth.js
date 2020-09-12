@@ -19,122 +19,55 @@ const ProfileFieldConvertor = require("../utils/ProfileFieldConvertor/ProfileFie
 exports.fillData = (req, res, next) => {
   id = req.body.id;
   var showData = {
-    firstName: true,
-    lastName: true,
-    companyName: true,
-    jobTitle: true,
-    gender: true,
-    mobilePhone: true,
-    homePhone: true,
+    firstName: false,
+    lastName: false,
+    companyName: false,
+    jobTitle: false,
+    gender: false,
+    mobilePhone: false,
+    homePhone: false,
     email: true,
-    workEmail: true,
-    twitter: true,
-    linkedIn: true,
-    facebook: true,
-    snapchat: true,
-    youtube: true,
-    instagram: true,
-    whatsapp: true,
-    viber: true,
-    adress: true,
-    birthday: true,
+    workEmail: false,
+    twitter: false,
+    linkedIn: false,
+    facebook: false,
+    snapchat: false,
+    youtube: false,
+    instagram: false,
+    whatsapp: false,
+    viber: false,
+    adress: false,
+    birthday: false,
   };
-  mobileNumber = ProfileFieldConvertor.mobileNumberConvertor(
-    req.body.mobileNumber,
-    "+381"
-  );
-  homeNumber = ProfileFieldConvertor.homeNumberConvertor(
-    req.body.homeNumber,
-    "+381"
-  );
+  mobileNumber = "";
+  homeNumber = "";
   email = req.body.email;
-  workEmail = req.body.workEmail;
+  workEmail = "";
 
-  twitter = req.body.twitter;
-  twitterUrl = ProfileFieldConvertor.twitterConvertor(req.body.twitter);
-  snapchat = req.body.snapchat;
-  snapchatUrl = ProfileFieldConvertor.snapchatConvertor(req.body.snapchat);
-  instagram = req.body.instagram;
-  instagramUrl = ProfileFieldConvertor.instagramConvertor(req.body.instagram);
-  linkedin = req.body.linkedin;
-  facebook = req.body.facebook;
-  youtube = req.body.youtube;
+  twitter = "";
+  twitterUrl = "";
+  snapchat = "";
+  snapchatUrl = "";
+  instagram = "";
+  instagramUrl = "";
+  linkedin = "";
+  facebook = "";
+  youtube = "";
 
-  whatsapp = ProfileFieldConvertor.mobileNumberConvertor(
-    req.body.whatsapp,
-    "+381"
-  );
-  viber = ProfileFieldConvertor.mobileNumberConvertor(req.body.viber, "+381");
-  address = req.body.address;
-  birthday = req.body.birthday;
-
-  if (req.body.firstName == "") {
-    showData.firstName = false;
-  }
-  if (req.body.lastName == "") {
-    showData.lastName = false;
-  }
-  if (req.body.companyName == "") {
-    showData.companyName = false;
-  }
-  if (req.body.jobTitle == "") {
-    showData.jobTitle = false;
-  }
-  if (req.body.mobileNumber == "") {
-    mobileNumber = "";
-    showData.mobilePhone = false;
-  }
-  if (req.body.homeNumber == "") {
-    homeNumber = "";
-    showData.homePhone = false;
-  }
-  if (req.body.email == "") {
-    showData.email = false;
-  }
-  if (req.body.workEmail == "") {
-    showData.workEmail = false;
-  }
-  if (req.body.twitter == "") {
-    twitterUrl = "";
-    showData.twitter = false;
-  }
-  if (req.body.snapchat == "") {
-    snapchatUrl = "";
-    showData.snapchat = false;
-  }
-  if (req.body.instagram == "") {
-    instagramUrl = "";
-    showData.instagram = false;
-  }
-  if (req.body.facebook == "") {
-    showData.facebook = false;
-  }
-  if (req.body.linkedIn == "") {
-    showData.linkedIn = false;
-  }
-  if (req.body.youtube == "") {
-    showData.youtube = false;
-  }
-  if (req.body.whatsapp == "") {
-    showData.whatsapp = false;
-  }
-  if (req.body.viber == "") {
-    showData.viber = false;
-  }
-  if (req.body.address == "") {
-    showData.address = false;
-  }
-  if (req.body.birthday == "") {
-    showData.birthday = false;
-  }
+  whatsapp = "";
+  viber = "";
+  address = "";
+  birthday = "";
 
   Profile.findById(id)
     .then((user) => {
+      console.log("Usao u find user ", user);
       if (!user) {
         const error = new Error("A user with this id could not be found!");
         error.statusCode = 401;
         throw error;
       }
+
       user.profileData.contactInfo.mobilePhone = mobileNumber;
       user.profileData.contactInfo.homePhone = homeNumber;
       user.profileData.contactInfo.email = email;
@@ -195,7 +128,6 @@ exports.validateProfile = async (req, res, next) => {
       });
     }
     if (user.validationTokenExpiration > Date.now()) {
-    
       user.validation = true;
       const saveUser = await user.save();
 
@@ -204,7 +136,6 @@ exports.validateProfile = async (req, res, next) => {
         userId: user._id,
       });
     } else {
- 
       const userDeleted = await Profile.findOneAndDelete({
         validationToken: token,
       });
@@ -307,15 +238,11 @@ exports.signup = async (req, res, next) => {
     }
     const id = req.body.id;
     const email = req.body.email;
-    const firstName = ProfileFieldConvertor.UpperFirstLetterConvertor(
-      req.body.firstName
-    );
-    const lastName = ProfileFieldConvertor.UpperFirstLetterConvertor(
-      req.body.lastName
-    );
+    const firstName = "";
+    const lastName = "";
     const password = req.body.password;
-    const companyName = req.body.companyName.toUpperCase();
-    const jobTitle = req.body.jobTitle.toUpperCase();
+    const companyName = "";
+    const jobTitle = "";
     const gender = req.body.gender;
 
     var urlImage;
@@ -332,20 +259,24 @@ exports.signup = async (req, res, next) => {
         error.data = error.array();
         throw error;
       }
-      const token = buffer.toString("hex");
+      const token = jwt.sign(
+        {
+          email: email,
+          userId: id,
+        },
+        "!secrethashtagfortokenvalidationsss!!##432",
+        { expiresIn: "1h" }
+      );
       var profile = new Profile({
         _id: id,
         email: email,
         password: hashedPw,
         imageUrl: urlImage,
+        isEdit: true,
         validation: true,
         validationToken: token,
         validationTokenExpiration: Date.now() + 3600000,
         profileData: {
-          firstName: firstName,
-          lastName: lastName,
-          companyName: companyName,
-          jobTitle: jobTitle,
           gender: gender,
         },
       });
@@ -357,7 +288,7 @@ exports.signup = async (req, res, next) => {
         generateTextFromHTML: true,
         html: `
           <p> Click on link to confirm email! <p>
-          <p> CLick this <a href="http://localhost:3000/auth/${token}> </a>
+          <p> CLick this <a href="http://192.168.0.120:3000/auth/${token}> </a>
       `,
       };
       smtpTransport.sendMail(mailOptions, (error, response) => {

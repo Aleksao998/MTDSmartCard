@@ -29,7 +29,7 @@ function LandingPage(props) {
       <LandingPageHeader {...props} />
       <div className="main">
         <DetailSection {...props} />
-        <VideoSection />
+
         <ContactSection />
       </div>
       <DemoFooter />

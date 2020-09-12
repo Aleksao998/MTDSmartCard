@@ -8,7 +8,7 @@ const bcrypt = require("bcryptjs");
 
 //Utils
 const ProfileFieldConvertor = require("../utils/ProfileFieldConvertor/ProfileFieldCOnvertor");
-
+const isProfileEmpty = require("../utils/isProfileEmpty");
 const storage = multer.diskStorage({
   destination: "./public/uploads/",
   filename: function (req, file, cb) {
@@ -204,7 +204,7 @@ exports.updateProfile = (req, res, next) => {
       profile.profileData.lastName = lastName;
       profile.profileData.companyName = companyName;
       profile.profileData.jobTitle = jobTitle;
-
+      profile.isEdit = false;
       profile.profileData.contactInfo.mobilePhone = mobileNumber;
       profile.profileData.contactInfo.homePhone = homeNumber;
       profile.profileData.contactInfo.email = email;
@@ -328,11 +328,16 @@ exports.createVCF = (req, res, next) => {
 
   res.send(vCard.getFormattedString());
 };
+
 exports.findById = (req, res, next) => {
   const id = req.params.id;
 
   Profile.findById(id)
     .then((result) => {
+      const empty = isProfileEmpty.isProfileEmpty(result);
+      if (empty) {
+        return res.status(201).json({});
+      }
       if (result !== null) {
         if (result.validation === false) {
           return res.status(401).json({});

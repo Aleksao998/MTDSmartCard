@@ -26,7 +26,7 @@ const ContactSection = () => {
       setError("Please fill all fields!");
       return;
     }
-    fetch("http://192.168.0.32:3001/contact/contactForm", {
+    fetch("http://192.168.0.120:3001/contact/contactForm", {
       method: "POST",
       body: JSON.stringify(state),
       headers: {

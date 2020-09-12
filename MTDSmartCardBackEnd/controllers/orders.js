@@ -28,12 +28,14 @@ exports.createOrder = async (req, res, next) => {
         name: req.body.name,
         lastName: req.body.lastName,
         address: req.body.address,
+        addressNum: req.body.adressNum,
         city: req.body.city,
         postCode: req.body.postCode,
         email: req.body.email,
         phoneNumber: req.body.phoneNumber,
         cardId: id,
         status: "Unprocessed",
+        holderName: req.body.arrayOfUserNames[i],
       });
       const savedProfile = await order.save();
     }
