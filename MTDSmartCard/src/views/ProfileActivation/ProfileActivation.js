@@ -5,7 +5,7 @@ const ProfileActivation = (props) => {
   useEffect(() => {
     props.setPageChange(!props.pageChange);
     const url =
-      "http://192.168.0.32:3001/auth/validateProfile/" + props.match.params.id;
+      "http://192.168.0.120:3001/auth/validateProfile/" + props.match.params.id;
     fetch(url)
       .then((res) => {
         if (res.status === 401) {

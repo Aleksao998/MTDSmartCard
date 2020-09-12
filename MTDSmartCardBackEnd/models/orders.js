@@ -15,6 +15,10 @@ const orderShema = new Shema(
       type: String,
       required: true,
     },
+    addressNum: {
+      type: String,
+      required: true,
+    },
     city: {
       type: String,
       required: true,
@@ -36,6 +40,10 @@ const orderShema = new Shema(
       required: true,
     },
     status: {
+      type: String,
+      required: true,
+    },
+    holderName: {
       type: String,
       required: true,
     },

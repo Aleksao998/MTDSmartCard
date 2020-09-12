@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Button, Form, Input, Row, Col } from "reactstrap";
 import DemoFooter from "components/Footers/DemoFooter.js";
 import { useAlert } from "react-alert";
+import { isTemplateSpan } from "typescript";
 const CheckoutPage = (props) => {
   document.documentElement.classList.remove("nav-open");
 
   const alert = useAlert();
+  const [refresh, setRefresh] = useState(true);
   const [validateName, setValidateName] = useState("");
   const [validateLastName, setValidateLastName] = useState("");
   const [validateAddress, setValidateAddress] = useState("");
@@ -14,6 +16,7 @@ const CheckoutPage = (props) => {
   const [validateEmail, setValidateEmail] = useState("");
   const [validatePhoneNumber, setValidatePhoneNumber] = useState("");
   const [validateNumberCard, setValidateNumberCard] = useState("");
+  const [validateAddressNum, setValidateAddressNum] = useState("");
   const [state, setState] = useState({
     name: "",
     lastName: "",
@@ -23,19 +26,52 @@ const CheckoutPage = (props) => {
     email: "",
     phoneNumber: "",
     cardNumber: "",
+    addressNum: "",
   });
+  const [arrayOfUserNames, setArrayOfUserNames] = useState([]);
+  const [validateArrayOfUserNames, setValidateArrayOfUserNames] = useState([]);
   const handleOnChange = (event) => {
     const { name, value } = event.target;
     setState({ ...state, [name]: value });
   };
+  const handleOnChangeArray = (event) => {
+    const { name, value } = event.target;
+    console.log(arrayOfUserNames[name]);
+    console.log(value, name);
+    var list = arrayOfUserNames;
+    list[name] = value;
+    setArrayOfUserNames(list);
+    setRefresh(!refresh);
+  };
   const submit = () => {
     var error = false;
+    setRefresh(!refresh);
+    for (var i = 0; i < state.cardNumber; i++) {
+      console.log(arrayOfUserNames[i]);
+      if (arrayOfUserNames[i] === "" || arrayOfUserNames[i] === undefined) {
+        var list = validateArrayOfUserNames;
+        list[i] = "has-danger";
+        setValidateArrayOfUserNames(list);
+        error = true;
+      } else {
+        console.log("usao");
+        var list = validateArrayOfUserNames;
+        list[i] = "has-success";
+        setValidateArrayOfUserNames(list);
+      }
+    }
     if (state.name === "") {
       setValidateName("has-danger");
 
       error = true;
     } else {
       setValidateName("has-success");
+    }
+    if (state.addressNum === "") {
+      setValidateAddressNum("has-danger");
+      error = true;
+    } else {
+      setValidateAddressNum("has-success");
     }
     if (state.lastName === "") {
       setValidateLastName("has-danger");
@@ -80,10 +116,9 @@ const CheckoutPage = (props) => {
       setValidateNumberCard("has-success");
     }
     if (error === true) {
-      console.log("error");
       return;
     } else {
-      fetch("http://192.168.0.32:3001/order/createOrder", {
+      fetch("http://192.168.0.120:3001/order/createOrder", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -91,10 +126,12 @@ const CheckoutPage = (props) => {
           name: state.name,
           lastName: state.lastName,
           address: state.address,
+          adressNum: state.addressNum,
           city: state.city,
           postCode: state.postCode,
           email: state.email,
           phoneNumber: state.phoneNumber,
+          arrayOfUserNames: arrayOfUserNames,
         }),
       })
         .then((res) => {
@@ -104,17 +141,18 @@ const CheckoutPage = (props) => {
           return res.json();
         })
         .then((resData) => {
-          console.log(resData);
           setState({
             name: "",
             lastName: "",
             address: "",
+            addressNum: "",
             city: "",
             postCode: "",
             email: "",
             phoneNumber: "",
             cardNumber: "",
           });
+          setArrayOfUserNames([]);
           setValidateName("");
           setValidateLastName("");
           setValidateAddress("");
@@ -123,13 +161,35 @@ const CheckoutPage = (props) => {
           setValidateEmail("");
           setValidatePhoneNumber("");
           setValidateNumberCard("");
+          setValidateAddressNum("");
+          setValidateArrayOfUserNames([]);
           alert.success("Purchase completed");
         })
         .catch((err) => {
           alert.error("Technical error");
         });
     }
-    console.log(state);
+  };
+  const userList = () => {
+    var items = [];
+
+    for (var i = 0; i < state.cardNumber; i++) {
+      var placeholder = "User " + i;
+      items.push(
+        <Col xs="12" md="12">
+          <Input
+            type="text"
+            placeholder={placeholder}
+            name={i}
+            value={arrayOfUserNames[i]}
+            onChange={handleOnChangeArray}
+            valid={validateArrayOfUserNames[i] === "has-success"}
+            invalid={validateArrayOfUserNames[i] === "has-danger"}
+          />
+        </Col>
+      );
+    }
+    return items;
   };
   React.useEffect(() => {
     props.setPageChange(!props.pageChange);
@@ -172,7 +232,7 @@ const CheckoutPage = (props) => {
                 </Col>
               </div>
               <div className="form-row">
-                <Col md="5" className="marginBottomColCheckOut">
+                <Col xs="9" md="5" className="marginBottomColCheckOut">
                   <Input
                     type="text"
                     placeholder="Address"
@@ -181,6 +241,17 @@ const CheckoutPage = (props) => {
                     onChange={handleOnChange}
                     valid={validateAddress === "has-success"}
                     invalid={validateAddress === "has-danger"}
+                  />
+                </Col>
+                <Col xs="3" md="5" className="marginBottomColCheckOut">
+                  <Input
+                    type="number"
+                    placeholder="Num"
+                    name="addressNum"
+                    value={state.addressNum}
+                    onChange={handleOnChange}
+                    valid={validateAddressNum === "has-success"}
+                    invalid={validateAddressNum === "has-danger"}
                   />
                 </Col>
                 <Col md="5" className="marginBottomColCheckOut">
@@ -244,6 +315,11 @@ const CheckoutPage = (props) => {
                 </Col>
               </div>
               <div className="form-row">
+                {userList().map((value, index) => {
+                  return value;
+                })}
+              </div>
+              <div className="form-row">
                 <Col>
                   <Button
                     block
@@ -272,7 +348,7 @@ const CheckoutPage = (props) => {
               <h5 className="bolderChartText">
                 Card Price:
                 <span style={{ fontWeight: "300", float: "right" }}>
-                  25 euro
+                  2500 rsd
                 </span>
               </h5>
             </div>
@@ -280,7 +356,7 @@ const CheckoutPage = (props) => {
               <h5 className="bolderChartText">
                 Total price:
                 <span style={{ fontWeight: "300", float: "right" }}>
-                  {parseInt(state.cardNumber) * 25} euro
+                  {state.cardNumber ? parseInt(state.cardNumber) * 2500 : 0} rsd
                 </span>
               </h5>
             </div>

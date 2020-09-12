@@ -20,10 +20,6 @@ router.put(
       .normalizeEmail(),
 
     body("password").trim().isLength({ min: 5 }),
-
-    body("firstName").trim().not().isEmpty(),
-
-    body("lastName").trim().not().isEmpty(),
   ],
   authController.signup
 );
@@ -38,7 +34,7 @@ const createAccountLimiter = rateLimit({
 router.post("/login", authController.login);
 
 //POST /auth/fillData
-router.post("/fillData", createAccountLimiter, authController.fillData);
+router.post("/fillData", authController.fillData);
 
 //GET /auth/validateProfile/
 router.get("/validateProfile/:token", authController.validateProfile);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // reactstrap components
-import { Button, Form } from "reactstrap";
+import { Button, Form, Input } from "reactstrap";
 
 function LoginPage(props) {
   const [state, setState] = useState({
@@ -26,7 +26,9 @@ function LoginPage(props) {
             <h3 className="titleRegistration">Welcome again</h3>
             <br />
             <Form className="register-form">
-              {props.error ? <div> {props.error} </div> : null}
+              {props.error ? (
+                <div style={{ color: "#dc3545" }}> {props.error} </div>
+              ) : null}
               <div className="row m-b-55-20">
                 <div className="col-md-3">
                   <div className="form-name">Email</div>
@@ -34,12 +36,13 @@ function LoginPage(props) {
                 <div className="col-md-9">
                   <div className="form-value">
                     <div className="input-group">
-                      <input
+                      <Input
                         type="email"
-                        className="input--style-5"
                         name="email"
                         id="email"
                         onChange={handleOnChange}
+                        valid={props.validateEmail === "has-success"}
+                        invalid={props.validateEmail === "has-danger"}
                         placeholder="Your Email"
                       />
                     </div>
@@ -54,13 +57,14 @@ function LoginPage(props) {
                 <div className="col-md-9">
                   <div className="form-value">
                     <div className="input-group">
-                      <input
+                      <Input
                         type="password"
-                        className="input--style-5"
                         name="password"
                         id="password"
                         onChange={handleOnChange}
                         placeholder="Password"
+                        valid={props.validatePass === "has-success"}
+                        invalid={props.validatePass === "has-danger"}
                       />
                     </div>
                   </div>

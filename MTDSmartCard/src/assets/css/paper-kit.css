@@ -2308,17 +2308,8 @@ textarea.form-control {
   position: relative;
 }
 
-.register-form .form-control {
-  border: 1px solid transparent !important;
-}
-
 .register-form .input-group .form-control {
   margin-left: -1px;
-}
-
-.register-form .input-group-prepend,
-.register-form .input-group-append {
-  border: 1px solid transparent !important;
 }
 
 #inputs .input-group {

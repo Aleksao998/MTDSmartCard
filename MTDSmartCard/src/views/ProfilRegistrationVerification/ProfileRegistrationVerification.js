@@ -7,6 +7,7 @@ import ErrorPage500 from "../ErrorPages/500ErrorPage/TechicalErrorPage";
 import VerifyEmail from "./VerifyEmail/VerifyEmail";
 const ProfileRegistrationVerification = (props) => {
   const [verified, setVerified] = useState(0);
+  const [refresh, setRefresh] = useState(true);
   const [id] = useState(props.match.params.id);
 
   const useForceUpdate = () => {
@@ -15,24 +16,34 @@ const ProfileRegistrationVerification = (props) => {
   useEffect(() => {
     console.log("___________________");
     console.log(props.location.search);
-    const url = "http://192.168.0.32:3001/profile/findProfileById/" + id;
+    const url = "http://192.168.0.120:3001/profile/findProfileById/" + id;
     fetch(url)
       .then((res) => {
         if (res.status === 200) {
+          props.setReg(true);
           setVerified(2);
           return;
         } else if (res.status === 401) {
+          props.setReg(true);
           setVerified(4);
           return;
+        } else if (res.status === 201) {
+          props.setReg(true);
+          setVerified(5);
+          return;
         } else {
+          console.log("USao");
+          props.setReg(false);
           setVerified(1);
           return;
         }
       })
       .catch((err) => {
+        props.setReg(false);
         setVerified(3);
       });
-  }, [id]);
+  }, [id, refresh]);
+
   React.useEffect(() => {
     props.setPageChange(true);
   }, [props.reload]);
@@ -44,6 +55,8 @@ const ProfileRegistrationVerification = (props) => {
         return (
           <RegistrationPage
             id={id}
+            refresh={refresh}
+            setRefresh={setRefresh}
             setPageChange={props.setPageChange}
             pageChange={props.pageChange}
             useForceUpdate={useForceUpdate}
@@ -68,6 +81,22 @@ const ProfileRegistrationVerification = (props) => {
         return <ErrorPage500 />;
       case 4:
         return <VerifyEmail />;
+      case 5:
+        return (
+          <ProfilePage
+            setPageChange={props.setPageChange}
+            pageChange={props.pageChange}
+            setEditProfileFromMenu={props.setEditProfileFromMenu}
+            editProfileFromMenu={1}
+            setRefresh={setRefresh}
+            refresh={refresh}
+            id={id}
+            token={props.token}
+            userId={props.userId}
+            location={props.location}
+            history={props.history}
+          />
+        );
       default:
         return null;
     }

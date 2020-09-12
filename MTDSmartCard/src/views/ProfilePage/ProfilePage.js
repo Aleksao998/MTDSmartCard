@@ -77,7 +77,7 @@ function ProfilePage(props) {
   const downloadContact = () => {
     console.log("test");
     console.log(showData.homeNumber);
-    const Url = `http://192.168.0.32:3001/profile/createVCF?firstName=${
+    const Url = `http://192.168.0.120:3001/profile/createVCF?firstName=${
       state.firstName
     }&lastName=${
       state.lastName
@@ -118,7 +118,7 @@ function ProfilePage(props) {
       });
   };
   const editProfile = () => {
-    fetch("http://192.168.0.32:3001/profile/updateProfile/", {
+    fetch("http://192.168.0.120:3001/profile/updateProfile/", {
       method: "POST",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -147,8 +147,10 @@ function ProfilePage(props) {
       }),
     })
       .then((res) => {
+        console.log("usao");
         props.history.push("/profile-page/" + props.id);
         props.setEditProfileFromMenu(0);
+        props.setRefresh(!props.refresh);
       })
       .catch((err) => {
         console.log(err);
@@ -156,6 +158,7 @@ function ProfilePage(props) {
   };
   React.useEffect(() => {
     let params = queryString.parse(props.location.search);
+    console.log("Usao u effect", props.editProfileFromMenu);
     if (params.edit === "true" || props.editProfileFromMenu === 1) {
       setButtonText("Save");
       setButtonIcon("fa fa-save");
@@ -169,7 +172,7 @@ function ProfilePage(props) {
       setisAuthenticated(true);
     }
 
-    fetch("http://192.168.0.32:3001/profile/profileData/" + props.id)
+    fetch("http://192.168.0.120:3001/profile/profileData/" + props.id)
       .then((res) => {
         if (res.status !== 200) {
           throw new Error("Failed to fetch posts.");

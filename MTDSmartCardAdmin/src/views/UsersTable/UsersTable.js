@@ -45,7 +45,7 @@ export default function UserTable() {
           var email = element.email;
           var id = element._id;
           var password = "**********";
-          var profile = "http://192.168.0.32:3000/profile-page/" + id;
+          var profile = "http://192.168.0.120:3000/profile-page/" + id;
           var obj = {
             email,
             id,
@@ -303,7 +303,9 @@ export default function UserTable() {
             icon: "perm_media",
             tooltip: "QR image",
             onClick: (event, rowData) => {
-              setQrValue("http://192.168.0.32:3000/profile-page/" + rowData.id);
+              setQrValue(
+                "http://192.168.0.120:3000/profile-page/" + rowData.id
+              );
               setId(rowData.id);
             },
           },

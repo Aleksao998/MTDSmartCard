@@ -1,10 +1,26 @@
-import React from "react";
-import { Input, Label, FormGroup, Button } from "reactstrap";
+import React, { useState } from "react";
+import {
+  Input,
+  Label,
+  FormGroup,
+  Button,
+  Popover,
+  PopoverHeader,
+  PopoverBody,
+  InputGroup,
+  InputGroupAddon,
+} from "reactstrap";
 // reactstrap components
 
 function ContactEditSection(props) {
   document.documentElement.classList.remove("nav-open");
-
+  const [popoverTwitter, setPopoverTwitter] = useState(false);
+  const [popoverInstagram, setPopoverInstagram] = useState(false);
+  const [popoverLinkein, setPopoverLinkein] = useState(false);
+  const [popoverFacebook, setPopoverFacebook] = useState(false);
+  const [popoverSnapchat, setPopoverSnapchat] = useState(false);
+  const [popoverYoutube, setPopoverYoutube] = useState(false);
+  const toggle = (value, set) => set(!value);
   React.useEffect(() => {
     props.setPageChange(!props.pageChange);
   }, []);
@@ -185,12 +201,36 @@ function ContactEditSection(props) {
                       paddingLeft: "5px",
                     }}
                   >
-                    <Input
-                      name="twitter"
-                      type="text"
-                      value={props.state.twitter[0]}
-                      onChange={props.handleOnChangeSocial}
-                    ></Input>
+                    <InputGroup>
+                      <InputGroupAddon addonType="prepend">
+                        <Button
+                          id="PopoverTwitter"
+                          type="button"
+                          className="popoverButton"
+                        >
+                          ?
+                        </Button>
+                      </InputGroupAddon>
+                      <Input
+                        name="twitter"
+                        type="text"
+                        value={props.state.twitter[0]}
+                        onChange={props.handleOnChangeSocial}
+                      ></Input>
+                    </InputGroup>
+                    <Popover
+                      placement="bottom"
+                      isOpen={popoverTwitter}
+                      target="PopoverTwitter"
+                      toggle={() => {
+                        toggle(popoverTwitter, setPopoverTwitter);
+                      }}
+                    >
+                      <PopoverHeader>Twitter</PopoverHeader>
+                      <PopoverBody>
+                        You can use twitter username or link to twitter profile
+                      </PopoverBody>
+                    </Popover>
                   </td>
                   <td className="tablePadding">
                     <FormGroup check style={{ marginTop: "-25px" }}>
@@ -223,12 +263,37 @@ function ContactEditSection(props) {
                       paddingLeft: "5px",
                     }}
                   >
-                    <Input
-                      name="instagram"
-                      type="text"
-                      value={props.state.instagram[0]}
-                      onChange={props.handleOnChangeSocial}
-                    ></Input>
+                    <InputGroup>
+                      <InputGroupAddon addonType="prepend">
+                        <Button
+                          id="PopoverInstagram"
+                          type="button"
+                          className="popoverButton"
+                        >
+                          ?
+                        </Button>
+                      </InputGroupAddon>
+                      <Input
+                        name="instagram"
+                        type="text"
+                        value={props.state.instagram[0]}
+                        onChange={props.handleOnChangeSocial}
+                      ></Input>
+                      <Popover
+                        placement="bottom"
+                        isOpen={popoverInstagram}
+                        target="PopoverInstagram"
+                        toggle={() => {
+                          toggle(popoverInstagram, setPopoverInstagram);
+                        }}
+                      >
+                        <PopoverHeader>Instagram</PopoverHeader>
+                        <PopoverBody>
+                          You can use instagram username or link to instagram
+                          profile
+                        </PopoverBody>
+                      </Popover>
+                    </InputGroup>
                   </td>
                   <td className="tablePadding">
                     <FormGroup check style={{ marginTop: "-25px" }}>
@@ -261,12 +326,36 @@ function ContactEditSection(props) {
                       paddingLeft: "5px",
                     }}
                   >
-                    <Input
-                      name="linkedin"
-                      type="text"
-                      value={props.state.linkedin[1]}
-                      onChange={props.handleOnChangeSocial}
-                    ></Input>
+                    <InputGroup>
+                      <InputGroupAddon addonType="prepend">
+                        <Button
+                          id="PopoverLinkedin"
+                          type="button"
+                          className="popoverButton"
+                        >
+                          ?
+                        </Button>
+                      </InputGroupAddon>
+                      <Input
+                        name="linkedin"
+                        type="text"
+                        value={props.state.linkedin[1]}
+                        onChange={props.handleOnChangeSocial}
+                      ></Input>
+                      <Popover
+                        placement="bottom"
+                        isOpen={popoverLinkein}
+                        target="PopoverLinkedin"
+                        toggle={() => {
+                          toggle(popoverLinkein, setPopoverLinkein);
+                        }}
+                      >
+                        <PopoverHeader>Linkedin</PopoverHeader>
+                        <PopoverBody>
+                          You must use link to Linkedin profile
+                        </PopoverBody>
+                      </Popover>
+                    </InputGroup>
                   </td>
                   <td className="tablePadding">
                     <FormGroup check style={{ marginTop: "-25px" }}>
@@ -299,12 +388,36 @@ function ContactEditSection(props) {
                       paddingLeft: "5px",
                     }}
                   >
-                    <Input
-                      name="facebook"
-                      type="text"
-                      value={props.state.facebook[1]}
-                      onChange={props.handleOnChangeSocial}
-                    ></Input>
+                    <InputGroup>
+                      <InputGroupAddon addonType="prepend">
+                        <Button
+                          id="PopoverFacebook"
+                          type="button"
+                          className="popoverButton"
+                        >
+                          ?
+                        </Button>
+                      </InputGroupAddon>
+                      <Input
+                        name="facebook"
+                        type="text"
+                        value={props.state.facebook[1]}
+                        onChange={props.handleOnChangeSocial}
+                      ></Input>
+                      <Popover
+                        placement="bottom"
+                        isOpen={popoverFacebook}
+                        target="PopoverFacebook"
+                        toggle={() => {
+                          toggle(popoverFacebook, setPopoverFacebook);
+                        }}
+                      >
+                        <PopoverHeader>Facebook</PopoverHeader>
+                        <PopoverBody>
+                          You must use link to Facebook profile
+                        </PopoverBody>
+                      </Popover>
+                    </InputGroup>
                   </td>
                   <td className="tablePadding">
                     <FormGroup check style={{ marginTop: "-25px" }}>
@@ -337,12 +450,37 @@ function ContactEditSection(props) {
                       paddingLeft: "5px",
                     }}
                   >
-                    <Input
-                      name="snapchat"
-                      type="text"
-                      value={props.state.snapchat[0]}
-                      onChange={props.handleOnChangeSocial}
-                    ></Input>
+                    <InputGroup>
+                      <InputGroupAddon addonType="prepend">
+                        <Button
+                          id="PopoverSnapchat"
+                          type="button"
+                          className="popoverButton"
+                        >
+                          ?
+                        </Button>
+                      </InputGroupAddon>
+                      <Input
+                        name="snapchat"
+                        type="text"
+                        value={props.state.snapchat[0]}
+                        onChange={props.handleOnChangeSocial}
+                      ></Input>
+                      <Popover
+                        placement="bottom"
+                        isOpen={popoverSnapchat}
+                        target="PopoverSnapchat"
+                        toggle={() => {
+                          toggle(popoverSnapchat, setPopoverSnapchat);
+                        }}
+                      >
+                        <PopoverHeader>Snapchat</PopoverHeader>
+                        <PopoverBody>
+                          You can use snapchat username or link to snapchat
+                          profile
+                        </PopoverBody>
+                      </Popover>
+                    </InputGroup>
                   </td>
                   <td className="tablePadding">
                     <FormGroup check style={{ marginTop: "-25px" }}>
@@ -375,12 +513,36 @@ function ContactEditSection(props) {
                       paddingLeft: "5px",
                     }}
                   >
-                    <Input
-                      name="youtube"
-                      type="text"
-                      value={props.state.youtube[1]}
-                      onChange={props.handleOnChangeSocial}
-                    ></Input>
+                    <InputGroup>
+                      <InputGroupAddon addonType="prepend">
+                        <Button
+                          id="PopoverYoutube"
+                          type="button"
+                          className="popoverButton"
+                        >
+                          ?
+                        </Button>
+                      </InputGroupAddon>
+                      <Input
+                        name="youtube"
+                        type="text"
+                        value={props.state.youtube[1]}
+                        onChange={props.handleOnChangeSocial}
+                      ></Input>
+                      <Popover
+                        placement="bottom"
+                        isOpen={popoverYoutube}
+                        target="PopoverYoutube"
+                        toggle={() => {
+                          toggle(popoverYoutube, setPopoverYoutube);
+                        }}
+                      >
+                        <PopoverHeader>Youtube</PopoverHeader>
+                        <PopoverBody>
+                          You must use link to youtube profile
+                        </PopoverBody>
+                      </Popover>
+                    </InputGroup>
                   </td>
                   <td className="tablePadding">
                     <FormGroup check style={{ marginTop: "-25px" }}>

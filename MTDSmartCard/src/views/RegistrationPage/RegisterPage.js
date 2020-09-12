@@ -1,25 +1,24 @@
 import React, { useState } from "react";
 import validator from "validator";
 import { withRouter } from "react-router-dom";
+
 // reactstrap components
-import { Button, Form } from "reactstrap";
+import { Button, Form, Input, FormGroup } from "reactstrap";
 
 // core components
 
 function RegisterPage(props) {
   const [error, setError] = useState("");
-  const [check, setCheck] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
+  const [check, setCheck] = useState(true);
+  const [selectedOption, setSelectedOption] = useState("male");
   const [state, setState] = useState({
     email: "",
     password: "",
-    firstName: "",
-    lastName: "",
-    companyName: "",
-    jobTitle: "",
     repassword: "",
   });
-
+  const [validateEmail, setValidateEmail] = useState("");
+  const [validatePass, setValidatePass] = useState("");
+  const [validateRePass, setValidateRePass] = useState("");
   const handleOnChange = (event) => {
     const { name, value } = event.target;
     setState({ ...state, [name]: value });
@@ -33,58 +32,56 @@ function RegisterPage(props) {
   };
   const createNewProfile = (event) => {
     event.preventDefault();
+    setValidateEmail("has-success");
+    setValidatePass("has-success");
+    setValidateRePass("has-success");
     //Check if all fields are filed
     if (
       state.email === "" ||
       state.password === "" ||
-      state.firstName === "" ||
-      state.lastName === "" ||
-      state.companyName === "" ||
-      state.jobTitle === "" ||
       state.repassword === "" ||
       selectedOption === ""
     ) {
+      if (state.email === "") setValidateEmail("has-danger");
+      if (state.password === "") setValidatePass("has-danger");
+      if (state.repassword === "") setValidateRePass("has-danger");
+
       setError("All field must be filed!");
       return;
     }
     //Check for valid email format
     if (validator.isEmail(state.email) !== true) {
+      setValidateEmail("has-danger");
       setError("Email is not valid format!");
       return;
     }
-
+    setValidateEmail("has-success");
     //simple password validate
     state.password = state.password.trim();
-    var mediumRegexPassword = new RegExp(
-      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})"
-    );
+    var mediumRegexPassword = new RegExp("^(?=.{8,})");
 
     if (mediumRegexPassword.test(state.password) !== true) {
-      setError(
-        "Password must contain min 8 caracters, 1 lower letter, 1 upper letter, 1 number!"
-      );
+      setValidatePass("has-danger");
+      setError("Password must contain min 8 caracters!");
       return;
     }
+    setValidatePass("has-success");
     //Check if password match
     if (state.password !== state.repassword) {
+      setValidateRePass("has-danger");
       setError("Password does not match!");
       return;
     }
-
-    //if check button is checked
-    if (check !== true) {
-      setError("Need to check checkbox!");
-      return;
-    }
-
+    setValidateRePass("has-success");
     //Check if email already exist
-    fetch("http://192.168.0.32:3001/profile/checkEmail?email=" + state.email)
+    fetch("http://192.168.0.120:3001/profile/checkEmail?email=" + state.email)
       .then((res) => {
         if (res.status !== 200) {
+          setValidateEmail("has-danger");
           throw new Error("Email already exists!");
         }
 
-        return fetch("http://192.168.0.32:3001/auth/signup", {
+        return fetch("http://192.168.0.120:3001/auth/signup", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -93,10 +90,6 @@ function RegisterPage(props) {
             id: props.id,
             email: state.email,
             password: state.password,
-            firstName: state.firstName,
-            lastName: state.lastName,
-            companyName: state.companyName,
-            jobTitle: state.jobTitle,
             gender: selectedOption,
           }),
         });
@@ -109,7 +102,25 @@ function RegisterPage(props) {
       })
       .then((resData) => {
         props.setLocalStorage(resData.token, resData.id);
-        props.history.push("/fill-data/" + resData.id);
+        fetch("http://192.168.0.120:3001/auth/fillData", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: props.match.params.id,
+            email: state.email,
+          }),
+        })
+          .then((res) => {
+            if (res.status !== 200) {
+              throw new Error("Creating or editing a post failed!");
+            }
+            props.setRefresh(!props.refresh);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         if (err.message === "Failed to fetch")
@@ -127,13 +138,31 @@ function RegisterPage(props) {
       <div className="page-headerReg paddingReg" style={{}}>
         <div className="container registration">
           <div className="card-5">
-            <h3 className="titleRegistration">Welcome</h3>
+            <h3 className="titleRegistration">Registration</h3>
             <br />
-            <Form className="register-form">
-              {error ? <div> {error} </div> : null}
+            <form className="register-form">
+              {error ? <div style={{ color: "#dc3545" }}> {error} </div> : null}
+
               <div className="row m-b-55-20">
                 <div className="col-md-3">
-                  <div className="form-name">Personal info</div>
+                  <div className="form-name">Email</div>
+                </div>
+                <div className="col-md-9">
+                  <div className="form-value">
+                    <Input
+                      type="email"
+                      name="email"
+                      onChange={handleOnChange}
+                      valid={validateEmail === "has-success"}
+                      invalid={validateEmail === "has-danger"}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="row m-b-55-20">
+                <div className="col-md-3">
+                  <div className="form-name">Password</div>
                 </div>
 
                 <div className="col-md-9">
@@ -141,66 +170,32 @@ function RegisterPage(props) {
                     <div className="row row-space">
                       <div className="col-md-6">
                         <div className="input-group-desc">
-                          <input
-                            className="input--style-5"
-                            type="text"
-                            name="firstName"
+                          <Input
+                            type="password"
+                            name="password"
                             onChange={handleOnChange}
+                            valid={validatePass === "has-success"}
+                            invalid={validatePass === "has-danger"}
                           />
-                          <label className="label--desc">First Name</label>
+                          <label className="label--desc">password</label>
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="input-group-desc">
-                          <input
-                            className="input--style-5"
-                            type="text"
-                            name="lastName"
+                          <Input
+                            type="password"
+                            name="repassword"
                             onChange={handleOnChange}
+                            valid={validateRePass === "has-success"}
+                            invalid={validateRePass === "has-danger"}
                           />
-                          <label className="label--desc">Last Name</label>
+                          <label className="label--desc">repeat password</label>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <div className="row m-b-55-20">
-                <div className="col-md-3">
-                  <div className="form-name">Personal info</div>
-                </div>
-
-                <div className="col-md-9">
-                  <div className="form-value">
-                    <div className="row row-space">
-                      <div className="col-md-6">
-                        <div className="input-group-desc">
-                          <input
-                            className="input--style-5"
-                            type="text"
-                            name="companyName"
-                            onChange={handleOnChange}
-                          />
-                          <label className="label--desc">Company Name</label>
-                        </div>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="input-group-desc">
-                          <input
-                            className="input--style-5"
-                            type="text"
-                            name="jobTitle"
-                            onChange={handleOnChange}
-                          />
-                          <label className="label--desc">Job Title</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               <div className="row m-b-55-20">
                 <div className="col-md-3">
                   <div className="form-name">Gender</div>
@@ -233,83 +228,6 @@ function RegisterPage(props) {
                 </div>
               </div>
 
-              <div className="row m-b-55-20">
-                <div className="col-md-3">
-                  <div className="form-name">Email</div>
-                </div>
-                <div className="col-md-9">
-                  <div className="form-value">
-                    <div className="input-group">
-                      <input
-                        className="input--style-5"
-                        type="email"
-                        name="email"
-                        onChange={handleOnChange}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="row m-b-55-20">
-                <div className="col-md-3">
-                  <div className="form-name">Password</div>
-                </div>
-
-                <div className="col-md-9">
-                  <div className="form-value">
-                    <div className="row row-space">
-                      <div className="col-md-6">
-                        <div className="input-group-desc">
-                          <input
-                            className="input--style-5"
-                            type="password"
-                            name="password"
-                            onChange={handleOnChange}
-                          />
-                          <label className="label--desc">password</label>
-                        </div>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="input-group-desc">
-                          <input
-                            className="input--style-5"
-                            type="password"
-                            name="repassword"
-                            onChange={handleOnChange}
-                          />
-                          <label className="label--desc">repeat password</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <br />
-
-              <div className="row m-b-55-20">
-                <div className="col-3">
-                  <input
-                    type="checkbox"
-                    name="agree-term"
-                    id="agree-term"
-                    className="agree-term"
-                    onChange={handleCheck}
-                  />
-                </div>
-                <div className="col-9">
-                  <label htmlFor="agree-term" className="label-agree-term">
-                    <span>
-                      <span></span>
-                    </span>
-                    I agree all statements in{" "}
-                    <a href="/#" className="term-service">
-                      Terms of service
-                    </a>
-                  </label>
-                </div>
-              </div>
-
               <div className="row m-b-10">
                 <Button
                   block
@@ -320,7 +238,7 @@ function RegisterPage(props) {
                   Create account
                 </Button>
               </div>
-            </Form>
+            </form>
           </div>
         </div>
       </div>

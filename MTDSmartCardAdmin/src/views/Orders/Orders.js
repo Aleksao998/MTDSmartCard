@@ -49,8 +49,10 @@ export default function Orders() {
         resData.data.forEach((element) => {
           var id = element._id;
           var name = element.name;
+          var holderName = element.holderName;
           var lastName = element.lastName;
           var address = element.address;
+          var addressNum = element.addressNum;
           var city = element.city;
           var postCode = element.postCode;
           var phoneNumber = element.phoneNumber;
@@ -58,8 +60,10 @@ export default function Orders() {
           var obj = {
             id,
             name,
+            holderName,
             lastName,
             address,
+            addressNum,
             city,
             postCode,
             phoneNumber,
@@ -259,8 +263,11 @@ export default function Orders() {
         columns={[
           { title: "Id", field: "cardId" },
           { title: "Name", field: "name" },
+
           { title: "Last name", field: "lastName" },
+          { title: "Holder", field: "holderName" },
           { title: "Address", field: "address" },
+          { title: "AdressNum", field: "addressNum" },
           { title: "City", field: "city" },
           { title: "Post code", field: "postCode" },
           { title: "Phone number", field: "phoneNumber" },
@@ -327,7 +334,9 @@ export default function Orders() {
             { title: "Id", field: "cardId" },
             { title: "Name", field: "name" },
             { title: "Last name", field: "lastName" },
+            { title: "Holder", field: "holderName" },
             { title: "Address", field: "address" },
+            { title: "AdressNum", field: "addressNum" },
             { title: "City", field: "city" },
             { title: "Post code", field: "postCode" },
             { title: "Phone number", field: "phoneNumber" },
@@ -425,7 +434,9 @@ export default function Orders() {
             { title: "Id", field: "cardId" },
             { title: "Name", field: "name" },
             { title: "Last name", field: "lastName" },
+            { title: "Holder", field: "holderName" },
             { title: "Address", field: "address" },
+            { title: "AdressNum", field: "addressNum" },
             { title: "City", field: "city" },
             { title: "Post code", field: "postCode" },
             { title: "Phone number", field: "phoneNumber" },

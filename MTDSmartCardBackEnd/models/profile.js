@@ -18,6 +18,7 @@ const profileShema = new Shema(
     imageUrl: {
       type: String,
     },
+    isEdit: Boolean,
     validation: Boolean,
     validationToken: String,
     validationTokenExpiration: Date,
