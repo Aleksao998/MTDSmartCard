@@ -77,7 +77,7 @@ function ProfilePage(props) {
   const downloadContact = () => {
     console.log("test");
     console.log(showData.homeNumber);
-    const Url = `http://192.168.0.120:3001/profile/createVCF?firstName=${
+    const Url = `http://https://mtdsmartcardbackend.com/:3001/profile/createVCF?firstName=${
       state.firstName
     }&lastName=${
       state.lastName
@@ -118,34 +118,37 @@ function ProfilePage(props) {
       });
   };
   const editProfile = () => {
-    fetch("http://192.168.0.120:3001/profile/updateProfile/", {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstName: state.firstName,
-        lastName: state.lastName,
-        companyName: state.companyName,
-        jobTitle: state.jobTitle,
-        mobileNumber: state.mobileNumber,
-        homeNumber: state.homeNumber,
-        email: state.email,
-        workEmail: state.workEmail,
-        twitter: state.twitter,
-        instagram: state.instagram,
-        linkedin: state.linkedin,
-        facebook: state.facebook,
-        snapchat: state.snapchat,
-        youtube: state.youtube,
-        whatsapp: state.whatsapp,
-        viber: state.viber,
-        address: state.address,
-        birthday: state.birthday,
-        showData: showData,
-      }),
-    })
+    fetch(
+      "http://https://mtdsmartcardbackend.com/:3001/profile/updateProfile/",
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: state.firstName,
+          lastName: state.lastName,
+          companyName: state.companyName,
+          jobTitle: state.jobTitle,
+          mobileNumber: state.mobileNumber,
+          homeNumber: state.homeNumber,
+          email: state.email,
+          workEmail: state.workEmail,
+          twitter: state.twitter,
+          instagram: state.instagram,
+          linkedin: state.linkedin,
+          facebook: state.facebook,
+          snapchat: state.snapchat,
+          youtube: state.youtube,
+          whatsapp: state.whatsapp,
+          viber: state.viber,
+          address: state.address,
+          birthday: state.birthday,
+          showData: showData,
+        }),
+      }
+    )
       .then((res) => {
         console.log("usao");
         props.history.push("/profile-page/" + props.id);
@@ -172,7 +175,10 @@ function ProfilePage(props) {
       setisAuthenticated(true);
     }
 
-    fetch("http://192.168.0.120:3001/profile/profileData/" + props.id)
+    fetch(
+      "http://https://mtdsmartcardbackend.com/:3001/profile/profileData/" +
+        props.id
+    )
       .then((res) => {
         if (res.status !== 200) {
           throw new Error("Failed to fetch posts.");

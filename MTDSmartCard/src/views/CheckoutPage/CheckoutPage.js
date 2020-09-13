@@ -118,7 +118,7 @@ const CheckoutPage = (props) => {
     if (error === true) {
       return;
     } else {
-      fetch("http://192.168.0.120:3001/order/createOrder", {
+      fetch("http://https://mtdsmartcardbackend.com/:3001/order/createOrder", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

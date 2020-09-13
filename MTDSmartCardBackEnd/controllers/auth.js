@@ -288,7 +288,7 @@ exports.signup = async (req, res, next) => {
         generateTextFromHTML: true,
         html: `
           <p> Click on link to confirm email! <p>
-          <p> CLick this <a href="http://192.168.0.120:3000/auth/${token}> </a>
+          <p> CLick this <a href="http://https://mtdsmartcardbackend.com/:3000/auth/${token}> </a>
       `,
       };
       smtpTransport.sendMail(mailOptions, (error, response) => {

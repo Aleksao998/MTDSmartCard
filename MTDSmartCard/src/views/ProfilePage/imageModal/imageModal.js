@@ -38,7 +38,7 @@ const ImageModal = (props) => {
     };
     axios
       .post(
-        "http://192.168.0.120:3001/profile/uploadImage",
+        "http://https://mtdsmartcardbackend.com/:3001/profile/uploadImage",
         bodyFormData,
         config
       )

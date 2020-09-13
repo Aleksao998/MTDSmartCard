@@ -33,7 +33,7 @@ const FillDataForm = (props) => {
     setTab(tab - 1);
   };
   const submit = () => {
-    fetch("http://192.168.0.120:3001/auth/fillData", {
+    fetch("http://https://mtdsmartcardbackend.com/:3001/auth/fillData", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

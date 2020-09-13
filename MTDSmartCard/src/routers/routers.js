@@ -99,7 +99,7 @@ const AppRoutes = (props) => {
     }
     setButtonText(null);
     setLoginButton(true);
-    fetch("http://192.168.0.120:3001/auth/login", {
+    fetch("http://https://mtdsmartcardbackend.com/:3001/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -16,7 +16,9 @@ const ProfileRegistrationVerification = (props) => {
   useEffect(() => {
     console.log("___________________");
     console.log(props.location.search);
-    const url = "http://192.168.0.120:3001/profile/findProfileById/" + id;
+    const url =
+      "http://https://mtdsmartcardbackend.com/:3001/profile/findProfileById/" +
+      id;
     fetch(url)
       .then((res) => {
         if (res.status === 200) {
