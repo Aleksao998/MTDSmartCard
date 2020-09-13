@@ -88,6 +88,6 @@ mongoose
     "mongodb+srv://AleksaOpacic:opacicaleksa32@cluster0-cplrq.mongodb.net/MTDSmartCard?retryWrites=true&w=majority"
   )
   .then((result) => {
-    httpsServer.listen(8443);
+    httpsServer.listen(3001);
   })
   .catch((err) => console.log(err));
