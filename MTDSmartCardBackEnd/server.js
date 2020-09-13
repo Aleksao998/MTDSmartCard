@@ -2,8 +2,9 @@ const express = require("express");
 var bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const helmet = require("helmet");
+const https = require("https");
 const cors = require("cors");
-
+const fs = require("fs");
 //Routes
 const contactRoutes = require("./routes/contact");
 const profileRoutes = require("./routes/profile");
@@ -18,6 +19,18 @@ const Profile = require("./models/profile");
 
 const app = express();
 var morgan = require("morgan");
+
+const hostname = "mtdsmartcardbackend.com";
+const httpsPort = 443;
+
+const httpsOption = {
+  cert: fs.readFileSync("./ssl/mtdsmartcardbackend_com.crt"),
+  ca: fs.readFileSync("./ssl/mtdsmartcardbackend_com.ca-bundle"),
+  key: fs.readFileSync("ssl/mtdsmartcardbackedn.com.key"),
+};
+
+const httpsServer = https.createServer(httpsOption, app);
+
 app.use(cors());
 app.use(morgan("tiny"));
 var rule = new schedule.RecurrenceRule();
@@ -75,6 +88,6 @@ mongoose
     "mongodb+srv://AleksaOpacic:opacicaleksa32@cluster0-cplrq.mongodb.net/MTDSmartCard?retryWrites=true&w=majority"
   )
   .then((result) => {
-    app.listen(3001);
+    httpsServer.listen(8443);
   })
   .catch((err) => console.log(err));
