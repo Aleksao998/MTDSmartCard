@@ -13,7 +13,12 @@ exports.mobileNumberConvertor = (number, prefix) => {
     number = _prefix.concat("", number);
     return number;
   }
-
+  if (number.indexOf("00381") == 0) {
+    number = number.slice(5);
+    const _prefix = prefix;
+    number = _prefix.concat("", number);
+    return number;
+  }
   if (number.indexOf("6") == 0) {
     const _prefix = prefix;
     number = _prefix.concat("", number);
@@ -30,6 +35,12 @@ exports.homeNumberConvertor = (number, prefix) => {
   }
   if (number.indexOf("011") == 0) {
     number = number.slice(1);
+    const _prefix = prefix;
+    number = _prefix.concat("", number);
+    return number;
+  }
+  if (number.indexOf("00381") == 0) {
+    number = number.slice(5);
     const _prefix = prefix;
     number = _prefix.concat("", number);
     return number;
