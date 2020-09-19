@@ -147,7 +147,7 @@ function ProfilePage(props) {
       }),
     })
       .then((res) => {
-        console.log("usao");
+        window.scrollTo(0, 0);
         props.history.push("/profile-page/" + props.id);
         props.setEditProfileFromMenu(0);
         props.setRefresh(!props.refresh);
