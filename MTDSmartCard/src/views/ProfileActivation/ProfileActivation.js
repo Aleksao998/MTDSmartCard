@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-
+var defaultConfig = require("../../default");
 const ProfileActivation = (props) => {
   const [text, setText] = useState("You have activated your account!");
   useEffect(() => {
     props.setPageChange(!props.pageChange);
     const url =
-      "http://https://mtdsmartcardbackend.com/:3001/auth/validateProfile/" +
-      props.match.params.id;
+      defaultConfig.endpoint + "/auth/validateProfile/" + props.match.params.id;
     fetch(url)
       .then((res) => {
         if (res.status === 401) {

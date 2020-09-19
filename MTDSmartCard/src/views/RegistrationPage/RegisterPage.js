@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 
 // reactstrap components
 import { Button, Form, Input, FormGroup } from "reactstrap";
-
+var defaultConfig = require("../../default");
 // core components
 
 function RegisterPage(props) {
@@ -74,31 +74,25 @@ function RegisterPage(props) {
     }
     setValidateRePass("has-success");
     //Check if email already exist
-    fetch(
-      "http://https://mtdsmartcardbackend.com/:3001/profile/checkEmail?email=" +
-        state.email
-    )
+    fetch(defaultConfig.endpoint + "/profile/checkEmail?email=" + state.email)
       .then((res) => {
         if (res.status !== 200) {
           setValidateEmail("has-danger");
           throw new Error("Email already exists!");
         }
 
-        return fetch(
-          "http://https://mtdsmartcardbackend.com/:3001/auth/signup",
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              id: props.id,
-              email: state.email,
-              password: state.password,
-              gender: selectedOption,
-            }),
-          }
-        );
+        return fetch("https://mtdsmartcardbackend.com/app/auth/signup", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: props.id,
+            email: state.email,
+            password: state.password,
+            gender: selectedOption,
+          }),
+        });
       })
       .then((res) => {
         if (res.status !== 200) {
@@ -108,7 +102,7 @@ function RegisterPage(props) {
       })
       .then((resData) => {
         props.setLocalStorage(resData.token, resData.id);
-        fetch("http://https://mtdsmartcardbackend.com/:3001/auth/fillData", {
+        fetch("https://mtdsmartcardbackend.com/app/auth/fillData", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

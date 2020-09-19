@@ -3,6 +3,7 @@ import { Button, Form, Input, Row, Col } from "reactstrap";
 import DemoFooter from "components/Footers/DemoFooter.js";
 import { useAlert } from "react-alert";
 import { isTemplateSpan } from "typescript";
+var defaultConfig = require("../../default");
 const CheckoutPage = (props) => {
   document.documentElement.classList.remove("nav-open");
 
@@ -118,7 +119,7 @@ const CheckoutPage = (props) => {
     if (error === true) {
       return;
     } else {
-      fetch("http://https://mtdsmartcardbackend.com/:3001/order/createOrder", {
+      fetch(defaultConfig.endpoint + "/order/createOrder", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

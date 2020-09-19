@@ -11,7 +11,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
-
+var defaultConfig = require("../../../default");
 const ContactSection = () => {
   const alert = useAlert();
   const [state, setState] = useState({
@@ -26,7 +26,7 @@ const ContactSection = () => {
       setError("Please fill all fields!");
       return;
     }
-    fetch("http://https://mtdsmartcardbackend.com/:3001/contact/contactForm", {
+    fetch(defaultConfig.endpoint + "/contact/contactForm", {
       method: "POST",
       body: JSON.stringify(state),
       headers: {

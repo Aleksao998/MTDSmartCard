@@ -5,6 +5,7 @@ import RegistrationPage from "../RegistrationPage/RegisterPage";
 import LoadingPage from "../LoadingPage/LoadingPage";
 import ErrorPage500 from "../ErrorPages/500ErrorPage/TechicalErrorPage";
 import VerifyEmail from "./VerifyEmail/VerifyEmail";
+var defaultConfig = require("../../default");
 const ProfileRegistrationVerification = (props) => {
   const [verified, setVerified] = useState(0);
   const [refresh, setRefresh] = useState(true);
@@ -16,9 +17,7 @@ const ProfileRegistrationVerification = (props) => {
   useEffect(() => {
     console.log("___________________");
     console.log(props.location.search);
-    const url =
-      "http://https://mtdsmartcardbackend.com/:3001/profile/findProfileById/" +
-      id;
+    const url = defaultConfig.endpoint + "/profile/findProfileById/" + id;
     fetch(url)
       .then((res) => {
         if (res.status === 200) {

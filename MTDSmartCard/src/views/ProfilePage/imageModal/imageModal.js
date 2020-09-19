@@ -4,6 +4,7 @@ import AvatarEditor from "react-avatar-editor";
 import { Button } from "reactstrap";
 const axios = require("axios");
 var FormData = require("form-data");
+var defaultConfig = require("../../../default");
 //Modal Setting
 const customStyles = {
   content: {
@@ -38,7 +39,7 @@ const ImageModal = (props) => {
     };
     axios
       .post(
-        "http://https://mtdsmartcardbackend.com/:3001/profile/uploadImage",
+        defaultConfig.endpoint + "/profile/uploadImage",
         bodyFormData,
         config
       )

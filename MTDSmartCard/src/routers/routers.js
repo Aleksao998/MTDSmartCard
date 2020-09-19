@@ -17,9 +17,10 @@ import LoginPage from "views/LoginPage/LoginPage";
 import ProfileActivation from "views/ProfileActivation/ProfileActivation";
 import FillDataForm from "views/ProfilRegistrationVerification/FillDataForm/FillDataForm";
 import CheckoutPage from "views/CheckoutPage/CheckoutPage";
+
 //localSTorage
 import { removeStore } from "../localStorage/localStorage";
-
+var defaultConfig = require("../default");
 const AppRoutes = (props) => {
   const [error, setError] = useState("");
   const [token, setToken] = useState(null);
@@ -99,7 +100,7 @@ const AppRoutes = (props) => {
     }
     setButtonText(null);
     setLoginButton(true);
-    fetch("http://https://mtdsmartcardbackend.com/:3001/auth/login", {
+    fetch(defaultConfig.endpoint + "/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -110,6 +111,7 @@ const AppRoutes = (props) => {
       }),
     })
       .then((res) => {
+        console.log(res);
         if (res.status === 500) {
           throw new Error("Techical problems with server, please trt later!");
         }

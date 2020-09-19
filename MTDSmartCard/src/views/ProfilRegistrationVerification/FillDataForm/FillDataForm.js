@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import FormTab1 from "./FormTab1/FormTab1";
 import FormTab2 from "./FormTab2/FormTab2";
 import FormTab3 from "./FormTab3/FormTab3";
+var defaultConfig = require("../../../default");
 const FillDataForm = (props) => {
   const [tab, setTab] = useState(1);
   const [state, setState] = useState({
@@ -33,7 +34,7 @@ const FillDataForm = (props) => {
     setTab(tab - 1);
   };
   const submit = () => {
-    fetch("http://https://mtdsmartcardbackend.com/:3001/auth/fillData", {
+    fetch(defaultConfig.endpoint + "/auth/fillData", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

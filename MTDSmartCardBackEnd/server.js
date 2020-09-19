@@ -2,9 +2,8 @@ const express = require("express");
 var bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const helmet = require("helmet");
-const https = require("https");
 const cors = require("cors");
-const fs = require("fs");
+var http = require("http");
 //Routes
 const contactRoutes = require("./routes/contact");
 const profileRoutes = require("./routes/profile");
@@ -18,19 +17,11 @@ var schedule = require("node-schedule");
 const Profile = require("./models/profile");
 
 const app = express();
+app.use((req, res, next) => {
+  console.log("startovan server");
+  next();
+});
 var morgan = require("morgan");
-
-const hostname = "mtdsmartcardbackend.com";
-const httpsPort = 443;
-
-const httpsOption = {
-  cert: fs.readFileSync("./ssl/mtdsmartcardbackend_com.crt"),
-  ca: fs.readFileSync("./ssl/mtdsmartcardbackend_com.ca-bundle"),
-  key: fs.readFileSync("ssl/mtdsmartcardbackedn.com.key"),
-};
-
-const httpsServer = https.createServer(httpsOption, app);
-
 app.use(cors());
 app.use(morgan("tiny"));
 var rule = new schedule.RecurrenceRule();
@@ -68,11 +59,11 @@ app.use(helmet.noSniff());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/contact", contactRoutes);
-app.use("/profile", profileRoutes);
-app.use("/auth", authRoutes);
-app.use("/order", orderRoutes);
-app.use("/admin", adminRoutes);
+app.use("/app/contact", contactRoutes);
+app.use("/app/profile", profileRoutes);
+app.use("/app/auth", authRoutes);
+app.use("/app/order", orderRoutes);
+app.use("/app/admin", adminRoutes);
 
 //Error handler
 app.use((error, req, res, next) => {
@@ -88,6 +79,6 @@ mongoose
     "mongodb+srv://AleksaOpacic:opacicaleksa32@cluster0-cplrq.mongodb.net/MTDSmartCard?retryWrites=true&w=majority"
   )
   .then((result) => {
-    httpsServer.listen(3001);
+    app.listen(443);
   })
-  .catch((err) => console.log(err));
+  .catch((err) => {});
