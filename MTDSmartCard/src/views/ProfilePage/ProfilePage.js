@@ -118,7 +118,7 @@ function ProfilePage(props) {
       });
   };
   const editProfile = () => {
-    fetch("https://mtdsmartcardbackend.com/app/profile/updateProfile/", {
+    fetch(defaultConfig.endpoint + "/profile/updateProfile/", {
       method: "POST",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -172,7 +172,7 @@ function ProfilePage(props) {
       setisAuthenticated(true);
     }
 
-    fetch("https://mtdsmartcardbackend.com/app/profile/profileData/" + props.id)
+    fetch(defaultConfig.endpoint + "/profile/profileData/" + props.id)
       .then((res) => {
         if (res.status !== 200) {
           throw new Error("Failed to fetch posts.");

@@ -81,7 +81,7 @@ function RegisterPage(props) {
           throw new Error("Email already exists!");
         }
 
-        return fetch("https://mtdsmartcardbackend.com/app/auth/signup", {
+        return fetch(defaultConfig.endpoint + "/auth/signup", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -102,7 +102,7 @@ function RegisterPage(props) {
       })
       .then((resData) => {
         props.setLocalStorage(resData.token, resData.id);
-        fetch("https://mtdsmartcardbackend.com/app/auth/fillData", {
+        fetch(defaultConfig.endpoint + "/auth/fillData", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
