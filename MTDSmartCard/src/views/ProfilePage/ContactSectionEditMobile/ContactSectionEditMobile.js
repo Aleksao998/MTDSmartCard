@@ -29,13 +29,6 @@ function ContactEditSection(props) {
     <div className="service_area">
       <div className="container-fluid">
         <div className="row">
-          <div className="col" style={{ textAlign: "center" }}>
-            <Button onClick={props.editProfile} color="success">
-              Sacuvaj
-            </Button>
-          </div>
-        </div>
-        <div className="row">
           <div className="col-xl-4 col-md-4">
             <table style={{ width: "100%" }}>
               <tbody>
@@ -714,6 +707,13 @@ function ContactEditSection(props) {
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col" style={{ textAlign: "center" }}>
+            <Button onClick={props.editProfile} color="success">
+              Sacuvaj
+            </Button>
           </div>
         </div>
       </div>
