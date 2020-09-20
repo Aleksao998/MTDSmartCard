@@ -181,7 +181,6 @@ function ProfilePage(props) {
       })
       .then((resData) => {
         setImageUrl(resData.profileImage);
-        console.log(resData.profileData.profileData.contactInfo.mobilePhone);
         setState({
           ...state,
           firstName: resData.profileData.profileData.firstName,

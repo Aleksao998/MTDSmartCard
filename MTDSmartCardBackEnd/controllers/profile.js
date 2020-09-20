@@ -227,7 +227,7 @@ exports.updateProfile = (req, res, next) => {
       profile.profileData.directMessage.whatsapp = whatsapp;
       profile.profileData.directMessage.viber = viber;
 
-      profile.profileData.personalInfo.address = address;
+      profile.profileData.personalInfo.adress = address;
       profile.profileData.personalInfo.birthday = birthday;
       profile.showData = req.body.showData;
       return profile.save();
