@@ -42,7 +42,7 @@ function ContactEditSection(props) {
                     <div>
                       <Input
                         name="mobileNumber"
-                        type="txt"
+                        type="tel"
                         value={props.state.mobileNumber}
                         onChange={props.handleOnChange}
                       ></Input>

@@ -1,4 +1,4 @@
-const testing = true;
+const testing = false;
 
 const endpoint = testing
   ? "http://localhost:443/app"
