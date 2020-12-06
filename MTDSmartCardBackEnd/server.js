@@ -81,4 +81,6 @@ mongoose
   .then((result) => {
     app.listen(443);
   })
-  .catch((err) => {});
+  .catch((err) => {
+    console.log(err);
+  });

@@ -112,7 +112,7 @@ const ContactSection = () => {
                 <Col className="ml-auto mr-auto" md="4">
                   <Button
                     className="btn-fill"
-                    color="danger"
+                    color="primary"
                     size="lg"
                     onClick={submit}
                   >

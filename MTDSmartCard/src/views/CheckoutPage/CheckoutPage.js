@@ -164,9 +164,13 @@ const CheckoutPage = (props) => {
           setValidateNumberCard("");
           setValidateAddressNum("");
           setValidateArrayOfUserNames([]);
-          alert.success("Purchase completed");
+          props.history.push({
+            pathname: '/confirmOrder',
+            state: { cardNumber: state.cardNumber, address: state.address, num: state.addressNum, city:state.city}
+          })
         })
         .catch((err) => {
+          console.log(err)
           alert.error("Technical error");
         });
     }
@@ -175,10 +179,12 @@ const CheckoutPage = (props) => {
     var items = [];
 
     for (var i = 0; i < state.cardNumber; i++) {
-      var placeholder = "User " + i;
+      var userNum = i + 1;
+      var placeholder = userNum + ". Cardholder name";
       items.push(
         <Col xs="12" md="12">
           <Input
+          style={{marginBottom:"10px"}}
             type="text"
             placeholder={placeholder}
             name={i}
@@ -201,10 +207,10 @@ const CheckoutPage = (props) => {
         <div className="row">
           <div className="col-md-8" style={{ backgroundColor: "white" }}>
             <div style={{ textAlign: "center" }}>
-              <h3>Buy card</h3>
+              <h3>Order now</h3>
             </div>
             <div style={{ marginTop: "40px" }}>
-              <h5>Customer information</h5>
+              <h5 className="bolderChartText">Customer information</h5>
             </div>
             <form style={{ marginTop: "30px" }}>
               <div className="form-row">
@@ -247,7 +253,7 @@ const CheckoutPage = (props) => {
                 <Col xs="3" md="5" className="marginBottomColCheckOut">
                   <Input
                     type="number"
-                    placeholder="Num"
+                    placeholder="No"
                     name="addressNum"
                     value={state.addressNum}
                     onChange={handleOnChange}
@@ -320,19 +326,6 @@ const CheckoutPage = (props) => {
                   return value;
                 })}
               </div>
-              <div className="form-row">
-                <Col>
-                  <Button
-                    block
-                    className="form-submit"
-                    color="success"
-                    onClick={submit}
-                  >
-                    {" "}
-                    Buy{" "}
-                  </Button>
-                </Col>
-              </div>
             </form>
           </div>
           <div className="col-md-4" style={{ backgroundColor: "#f7fbff" }}>
@@ -360,9 +353,23 @@ const CheckoutPage = (props) => {
                   {state.cardNumber ? parseInt(state.cardNumber) * 2500 : 0} rsd
                 </span>
               </h5>
+              <p style={{fontSize:"8px", marginTop:"0px"}}>*without shipping</p>
             </div>
           </div>
         </div>
+        <Row>
+          <Col>
+            <Button
+              block
+              className="form-submit"
+              color="success"
+              onClick={submit}
+            >
+              {" "}
+              Buy{" "}
+            </Button>
+          </Col>
+        </Row>
       </div>
     </div>
   );

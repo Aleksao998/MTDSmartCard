@@ -68,7 +68,7 @@ function ExamplesNavbar(props) {
               </NavItem>
               <NavItem onClick={props.logout}>
                 <NavLink to="/checkout" tag={Link}>
-                  Buy card
+                Order Now
                 </NavLink>
               </NavItem>
             </Nav>

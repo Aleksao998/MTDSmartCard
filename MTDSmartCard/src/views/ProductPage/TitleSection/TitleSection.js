@@ -18,7 +18,7 @@ const TitleSection = () => (
         <div>
           <Button className="btn-round btn-info" color="primary" outline>
             <i className="fa fa-shopping-cart "></i>
-            Buy Product
+            Order Now
           </Button>
           <Button
             className="btn-round btn-info"

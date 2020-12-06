@@ -28,7 +28,7 @@ export default function UserTable() {
 
   React.useEffect(() => {
     fetch(
-      "http://ec2-35-158-214-30.eu-central-1.compute.amazonaws.com:3001/profile/profileData",
+      "https://mtdsmartcardbackend.com/app/profile/profileData",
       {
         method: "GET",
       }
@@ -63,7 +63,7 @@ export default function UserTable() {
       });
 
     fetch(
-      "http://ec2-35-158-214-30.eu-central-1.compute.amazonaws.com:3001/admin/get",
+      "https://mtdsmartcardbackend.com/app/admin/get",
       {
         method: "GET",
       }
@@ -104,7 +104,7 @@ export default function UserTable() {
 
   const deleteUser = (id) => {
     fetch(
-      "http://ec2-35-158-214-30.eu-central-1.compute.amazonaws.com:3001/profile/deleteUser",
+      "https://mtdsmartcardbackend.com/app/profile/deleteUser",
       {
         method: "POST",
         headers: {
@@ -129,7 +129,7 @@ export default function UserTable() {
 
   const deleteAdmin = (id) => {
     fetch(
-      "http://ec2-35-158-214-30.eu-central-1.compute.amazonaws.com:3001/admin/deleteAdmin",
+      "https://mtdsmartcardbackend.com/app/admin/deleteAdmin",
       {
         method: "POST",
         headers: {
@@ -155,7 +155,7 @@ export default function UserTable() {
   const updateUser = (data) => {
     console.log(data.password);
     fetch(
-      "http://ec2-35-158-214-30.eu-central-1.compute.amazonaws.com:3001/profile/updateProfileAdmin",
+      "https://mtdsmartcardbackend.com/app/profile/updateProfileAdmin",
       {
         method: "POST",
         headers: {
@@ -183,7 +183,7 @@ export default function UserTable() {
   const updateAdmin = (data) => {
     console.log(data.password);
     fetch(
-      "http://ec2-35-158-214-30.eu-central-1.compute.amazonaws.com:3001/admin/updateAdmin",
+      "https://mtdsmartcardbackend.com/app/admin/updateAdmin",
       {
         method: "POST",
         headers: {
@@ -209,7 +209,7 @@ export default function UserTable() {
   };
   const createAdmin = (data) => {
     fetch(
-      "http://ec2-35-158-214-30.eu-central-1.compute.amazonaws.com:3001/admin/signup",
+      "https://mtdsmartcardbackend.com/app/admin/signup",
       {
         method: "PUT",
         headers: {

@@ -19,6 +19,7 @@ function ProfilePage(props) {
   document.documentElement.classList.remove("nav-open");
   const linkRef = React.createRef();
   //ReactState
+  const [onPage, setOnPage] = React.useState(true);
   const [links, setLink] = React.useState(false);
   const [mobile, setIsMobile] = React.useState(false);
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -180,6 +181,7 @@ function ProfilePage(props) {
         return res.json();
       })
       .then((resData) => {
+        
         setImageUrl(resData.profileImage);
         setState({
           ...state,
@@ -270,7 +272,7 @@ function ProfilePage(props) {
           }
         </div>
       </div>
-      <DemoFooter />
+      <DemoFooter {...props} onPage={onPage} />
     </>
   );
 }

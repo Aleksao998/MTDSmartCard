@@ -24,3 +24,28 @@ body {
 .dropdown.show .dropdown-menu[x-placement="bottom-start"] {
   margin-top: 25px;
 }
+
+.buyBanner {
+  background-color: #e1e1e1c5 !important;
+  height: 50px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 10000;
+}
+
+.buyBannerText {
+  padding-top: 11px;
+  text-align: right;
+  margin-right: -15px;
+}
+
+.buyBannerClosingButton {
+  font-size: 35px;
+  padding-top: 6px !important;
+  padding-right: 20px !important;
+}
+
+.buyBannerMTDLogo {
+  color: #669db3ff;
+}

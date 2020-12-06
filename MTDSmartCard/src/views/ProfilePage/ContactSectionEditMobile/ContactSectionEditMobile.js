@@ -9,7 +9,10 @@ import {
   PopoverBody,
   InputGroup,
   InputGroupAddon,
+  Row,
+  Col
 } from "reactstrap";
+import InstructionModal from "../instructionModal/instructionModal"
 // reactstrap components
 
 function ContactEditSection(props) {
@@ -20,6 +23,14 @@ function ContactEditSection(props) {
   const [popoverFacebook, setPopoverFacebook] = useState(false);
   const [popoverSnapchat, setPopoverSnapchat] = useState(false);
   const [popoverYoutube, setPopoverYoutube] = useState(false);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const afterOpenModal = () => {};
   const toggle = (value, set) => set(!value);
   React.useEffect(() => {
     props.setPageChange(!props.pageChange);
@@ -28,6 +39,16 @@ function ContactEditSection(props) {
   return (
     <div className="service_area">
       <div className="container-fluid">
+      <InstructionModal
+      modalIsOpen={modalIsOpen}
+      afterOpenModal={afterOpenModal}
+      closeModal={closeModal}
+    />
+    <Row>
+    <Col style={{textAlign:"center", marginBottom:"10px"}}>
+    <Button color="link" onClick={() => openModal()}>Open instructions</Button>
+    </Col>
+    </Row>
         <div className="row">
           <div className="col-xl-4 col-md-4">
             <table style={{ width: "100%" }}>
@@ -221,7 +242,7 @@ function ContactEditSection(props) {
                     >
                       <PopoverHeader>Twitter</PopoverHeader>
                       <PopoverBody>
-                        You can use twitter username or link to twitter profile
+                        You can use your twitter username
                       </PopoverBody>
                     </Popover>
                   </td>
@@ -282,8 +303,7 @@ function ContactEditSection(props) {
                       >
                         <PopoverHeader>Instagram</PopoverHeader>
                         <PopoverBody>
-                          You can use instagram username or link to instagram
-                          profile
+                          You can use your instagram username 
                         </PopoverBody>
                       </Popover>
                     </InputGroup>
@@ -469,8 +489,7 @@ function ContactEditSection(props) {
                       >
                         <PopoverHeader>Snapchat</PopoverHeader>
                         <PopoverBody>
-                          You can use snapchat username or link to snapchat
-                          profile
+                          You can use your snapchat username
                         </PopoverBody>
                       </Popover>
                     </InputGroup>

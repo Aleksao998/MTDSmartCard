@@ -1,7 +1,7 @@
 import React from "react";
-
-const CompatibilitySection = () => (
-  <section id="video" className="section video-section text-center">
+import {Col, Button} from "reactstrap"
+const CompatibilitySection = (props) => (
+  <section id="video" className="section video-section text-center" style={{marginTop:"60px"}}>
     <h2 className="title" style={{ color: "white" }}>
       NFC Supported Devices
     </h2>
@@ -72,6 +72,11 @@ const CompatibilitySection = () => (
           Xperia XZ1/Compact, Xperia 1, 10/Plus, Xperia XA1/Ultra/Plus, Xperia
           XZ2/Compact/Premium, Xperia XA2/Ultra/Plus, Xperia XZ3
         </div>
+      </div>
+      <div className="row" style={{marginTop:"20px"}}>
+      <Col>
+        <Button color="white-color" onClick={()=>{props.history.push("checkout")}}>Order Now</Button>
+      </Col>
       </div>
     </div>
   </section>

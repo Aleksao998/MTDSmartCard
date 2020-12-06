@@ -1,7 +1,8 @@
 import React from "react";
-import { Input, Label } from "reactstrap";
+import { Input, Label, Button, Row, Col } from "reactstrap";
 //modal
 import ImageModal from "../imageModal/imageModal";
+const uploadImage = require("./uploadImage.png");
 const MainSectionEdit = (props) => (
   <div>
     <div className="owner">
@@ -22,7 +23,11 @@ const MainSectionEdit = (props) => (
           />
         </button>
       </div>
-      <p style={{ paddingBottom: "15px" }}> Click on image to change </p>
+      <Row>
+      <Col style={{textAlign:"center", marginBottom:"10px"}}>
+      <Button outline color="primary" onClick={() => props.openModal()}>Change image</Button>
+      </Col>
+      </Row>
       <div className="name">
         <div className="row" style={{ marginBottom: "5px" }}>
           <div className="col-4" style={{ textAlign: "left" }}>

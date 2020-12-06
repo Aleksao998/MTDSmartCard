@@ -12,16 +12,6 @@ const DetailSection = (props) => (
           <h2 className="title">Share Your Contact Details With a TAP</h2>
           <h5 className="description"></h5>
           <br />
-          <Button
-            className="btn-round"
-            color="primary"
-            href="#pablo"
-            onClick={() => {
-              props.history.push("/product-page");
-            }}
-          >
-            See Details
-          </Button>
         </Col>
       </Row>
       <br />
@@ -31,10 +21,13 @@ const DetailSection = (props) => (
           <div className="info">
             <img src={uputstvo1} />
             <div className="description">
-              <h4 className="info-title">Configurate profile</h4>
+              <h4 style={{ color: "#669db3ff", fontWeight: "500" }}>
+                Configurate profile
+              </h4>
               <p className="description">
-                You decide which information you would like to be displayed
-                (email, mobile numbers, social networks, company infomration...)
+                After creating the profile, you decide which information you
+                would like to be displayed (email, mobile numbers, social
+                networks, company infomration...)
               </p>
             </div>
           </div>
@@ -43,31 +36,28 @@ const DetailSection = (props) => (
           <div className="info">
             <img src={uputstvo2} />
             <div className="description">
-              <h4 className="info-title">Touch & Connect</h4>
+              <h4 style={{ color: "#669db3ff", fontWeight: "500" }}>
+                Touch & Connect
+              </h4>
               <p>
-                When wanting to exchange business cards, simply press onto the
-                phone.Phones with Nfc enabled will open profile automaticaly,
-                for other use camera to scan QR code
+                By simply scanning the QR code with any phone camera or taping
+                the card with NFC enabled phones, you can exchange desired
+                information.
               </p>
-              <Button
-                className="btn-link"
-                color="primary"
-                href="#pablo"
-                style={{ marginBottom: "60px" }}
-              >
-                Phones with Nfc Enabled
-              </Button>
             </div>
           </div>
         </Col>
-        <Col md="4">
+        <Col md="4" style={{ marginTop: "60px" }}>
           <div className="info">
             <img src={uputstvo3} />
             <div className="description">
-              <h4 className="info-title">View profile</h4>
+              <h4 style={{ color: "#669db3ff", fontWeight: "500" }}>
+                View profile
+              </h4>
               <p>
-                Inside user proifle, you can view their data and downalod
-                contact directly to your phone clicking on button Contact.
+                Once the profile is open on the phone browser, you can view the
+                desired data and download contact directly to your phone
+                clicking on “Save Contact” button.
               </p>
             </div>
           </div>

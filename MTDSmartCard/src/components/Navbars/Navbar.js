@@ -189,19 +189,7 @@ function ExamplesNavbar(props) {
                     Update Profile
                   </NavLink>
                 </NavItem>
-              ) : (
-                <NavItem>
-                  <NavLink
-                    to="/product-page"
-                    tag={Link}
-                    onClick={() => {
-                      props.setReload(!props.reload);
-                    }}
-                  >
-                    Product Page
-                  </NavLink>
-                </NavItem>
-              )}
+              ) : null}
               {props.isAuth ? null : (
                 <NavItem>
                   <NavLink
@@ -238,7 +226,7 @@ function ExamplesNavbar(props) {
                       props.setReload(!props.reload);
                     }}
                   >
-                    Buy card
+                  Order Now
                   </NavLink>
                 </NavItem>
               )}

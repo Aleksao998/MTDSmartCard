@@ -9,6 +9,8 @@ import DemoFooter from "components/Footers/DemoFooter.js";
 import DetailSection from "./DetailSection/DetailSection";
 import VideoSection from "./VideoSection/VideoSection";
 import ContactSection from "./ContactSection/ContactSection";
+import CompatibilitySection from "./CompatibilitySection/CompatibilitySection";
+import BuyProduct from "./BuyProduct/buyProducts";
 
 function LandingPage(props) {
   document.documentElement.classList.remove("nav-open");
@@ -29,7 +31,8 @@ function LandingPage(props) {
       <LandingPageHeader {...props} />
       <div className="main">
         <DetailSection {...props} />
-
+        <CompatibilitySection {...props}/>
+        <BuyProduct {...props} />
         <ContactSection />
       </div>
       <DemoFooter />

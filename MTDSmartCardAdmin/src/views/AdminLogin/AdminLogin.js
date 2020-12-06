@@ -17,7 +17,7 @@ function AdminLogin(props) {
   const loginAdmin = (event) => {
     event.preventDefault();
     fetch(
-      "http://ec2-35-158-214-30.eu-central-1.compute.amazonaws.com:3001/admin/login",
+      "https://mtdsmartcardbackend.com/app/admin/login",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
