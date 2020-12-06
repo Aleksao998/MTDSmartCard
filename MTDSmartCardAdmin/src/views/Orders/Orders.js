@@ -30,7 +30,7 @@ export default function Orders() {
 
   React.useEffect(() => {
     fetch(
-      "http://ec2-35-158-214-30.eu-central-1.compute.amazonaws.com:3001/order/orders",
+      "https://mtdsmartcardbackend.com/app/order/orders",
       {
         method: "GET",
       }
@@ -119,7 +119,7 @@ export default function Orders() {
 
   const deleteOrder = (id) => {
     fetch(
-      "http://ec2-35-158-214-30.eu-central-1.compute.amazonaws.com:3001/order/deleteOrder",
+      "https://mtdsmartcardbackend.com/app/order/deleteOrder",
       {
         method: "POST",
         headers: {
@@ -144,7 +144,7 @@ export default function Orders() {
 
   const updateUser = (data) => {
     fetch(
-      "http://ec2-35-158-214-30.eu-central-1.compute.amazonaws.com:3001/order/updateOrder/" +
+      "https://mtdsmartcardbackend.com/app/order/updateOrder/" +
         data.id,
       {
         method: "POST",
@@ -176,7 +176,7 @@ export default function Orders() {
 
   const changeTable = (data, tableName) => {
     fetch(
-      "http://ec2-35-158-214-30.eu-central-1.compute.amazonaws.com:3001/order/updateOrder/" +
+      "https://mtdsmartcardbackend.com/app/order/updateOrder/" +
         data.id,
       {
         method: "POST",

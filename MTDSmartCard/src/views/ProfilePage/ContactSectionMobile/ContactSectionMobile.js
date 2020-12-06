@@ -172,7 +172,7 @@ const ContactSection = (props) => {
                           href={props.state.twitter[1]}
                           style={{ fontWeight: "500", color: "black" }}
                         >
-                          Profil
+                        {props.state.twitter[0]}
                         </a>
                       </td>
                     </tr>
@@ -205,7 +205,7 @@ const ContactSection = (props) => {
                           href={props.state.linkedin[1]}
                           style={{ fontWeight: "500", color: "black" }}
                         >
-                          Profil
+                          View Profile
                         </a>
                       </td>
                     </tr>
@@ -237,7 +237,7 @@ const ContactSection = (props) => {
                           href={props.state.instagram[1]}
                           style={{ fontWeight: "500", color: "black" }}
                         >
-                          Profil
+                        {props.state.instagram[0]}
                         </a>
                       </td>
                     </tr>
@@ -270,7 +270,7 @@ const ContactSection = (props) => {
                           href={props.state.facebook[1]}
                           style={{ fontWeight: "500", color: "black" }}
                         >
-                          Profil
+                          View profile
                         </a>
                       </td>
                     </tr>
@@ -303,7 +303,7 @@ const ContactSection = (props) => {
                           href={props.state.snapchat[1]}
                           style={{ fontWeight: "500", color: "black" }}
                         >
-                          Profil
+                        {props.state.snapchat[0]}
                         </a>
                       </td>
                     </tr>
@@ -336,7 +336,7 @@ const ContactSection = (props) => {
                           href={props.state.youtube[1]}
                           style={{ fontWeight: "500", color: "black" }}
                         >
-                          Profil
+                          View profile
                         </a>
                       </td>
                     </tr>

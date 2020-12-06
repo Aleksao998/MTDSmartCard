@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 import validator from "validator";
 import NavBar from "../components/Navbars/Navbar";
-import NavBarProfile from "../components/Navbars/NavBarProfile";
+import BuyModal from "../components/BuyProductModal/BuyProductModal";
+import { Row, Col, Button } from "reactstrap";
 
 //Redux store
 import { connect } from "react-redux";
@@ -17,7 +18,8 @@ import LoginPage from "views/LoginPage/LoginPage";
 import ProfileActivation from "views/ProfileActivation/ProfileActivation";
 import FillDataForm from "views/ProfilRegistrationVerification/FillDataForm/FillDataForm";
 import CheckoutPage from "views/CheckoutPage/CheckoutPage";
-
+import CompactibilitySection from "views/CompactibilitySection/CompactibilitySection"
+import ConfirmOrderPage from "views/CheckoutPage/ConfirmOrder"
 //localSTorage
 import { removeStore } from "../localStorage/localStorage";
 var defaultConfig = require("../default");
@@ -34,6 +36,15 @@ const AppRoutes = (props) => {
   const [reload, setReload] = React.useState(false);
   const [validateEmail, setValidateEmail] = useState("");
   const [validatePass, setValidatePass] = useState("");
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const openModal = () => {
+    console.log("usao");
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const afterOpenModal = () => {};
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     const expiryDate = localStorage.getItem("expiryDate");
@@ -169,20 +180,34 @@ const AppRoutes = (props) => {
 
   return (
     <div>
+      <BuyModal
+        {...props}
+        modalIsOpen={modalIsOpen}
+        afterOpenModal={afterOpenModal}
+        closeModal={closeModal}
+      ></BuyModal>
       {window.location.pathname.startsWith("/profile-page") &&
       !isAuth &&
       isReg ? (
-        <NavBarProfile
-          pageChange={pageChange}
-          setPageChange={setPageChange}
-          setEditProfileFromMenu={setEditProfileFromMenu}
-          isAuth={isAuth}
-          userId={userId}
-          logout={logoutHandler}
-          reload={reload}
-          setReload={setReload}
-          {...props}
-        />
+        <div className="buyBanner">
+          <Row>
+            <Col xs="8" sm="8">
+              <h6 className="title buyBannerText">
+                {" "}
+                Order <span className="buyBannerMTDLogo">MTD</span> Smart Card
+              </h6>
+            </Col>
+            <Col xs="4" sm="4">
+              <Button
+                close
+                className="buyBannerClosingButton"
+                onClick={() => {
+                  openModal();
+                }}
+              />
+            </Col>
+          </Row>
+        </div>
       ) : (
         <NavBar
           pageChange={pageChange}
@@ -239,6 +264,29 @@ const AppRoutes = (props) => {
             />
           )}
         />
+
+        <Route
+        path="/confirmOrder"
+        render={(props) => (
+          <ConfirmOrderPage
+            {...props}
+            setPageChange={setPageChange}
+              pageChange={pageChange}
+          />
+        )}
+        />
+
+        
+        <Route
+        path="/compactibilitySection"
+        render={(props) => (
+          <CompactibilitySection
+            {...props}
+            
+          />
+        )}
+      />
+
 
         <Route
           path="/product-page"

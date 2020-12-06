@@ -300,31 +300,34 @@ exports.createVCF = (req, res, next) => {
 
   //Social network
   const facebook = arrayWrap(req.query.facebook || "");
-  vCard.socialUrls["facebook"] = facebook[0].split(",")[1];
+  vCard.socialUrls["facebook"] = facebook[0];
 
   const linkedIn = arrayWrap(req.query.linkedIn || "");
-  vCard.socialUrls["linkedIn"] = linkedIn[0].split(",")[1];
+  vCard.socialUrls["linkedIn"] = linkedIn[0];
 
   const twitter = arrayWrap(req.query.twitter || "");
-  vCard.socialUrls["twitter"] = twitter[0].split(",")[1];
+  vCard.socialUrls["twitter"] = twitter[0];
 
   const snapchat = arrayWrap(req.query.snapchat || "");
 
-  vCard.socialUrls["snapchat"] = snapchat[0].split(",")[1];
+  vCard.socialUrls["snapchat"] = snapchat[0];
 
   const youtube = arrayWrap(req.query.youtube || "");
-  vCard.socialUrls["youtube"] = youtube[0].split(",")[1];
 
+  vCard.socialUrls["youtube"] = youtube[0];
+  
   const instagram = arrayWrap(req.query.instagram || "");
-  vCard.socialUrls["instagram"] = instagram[0].split(",")[1];
+ 
+  vCard.socialUrls["instagram"] = instagram[0];
 
   //Direct messages
 
   //Personal info
   const homeAddress = arrayWrap(req.query.address || "");
   vCard.homeAddress.street = homeAddress[0];
-
+  console.log(vCard)
   res.set("Content-Type", "text/vcard");
+ 
 
   res.send(vCard.getFormattedString());
 };

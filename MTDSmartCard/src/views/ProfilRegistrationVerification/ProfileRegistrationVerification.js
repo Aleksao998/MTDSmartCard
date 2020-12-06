@@ -76,6 +76,8 @@ const ProfileRegistrationVerification = (props) => {
             userId={props.userId}
             location={props.location}
             history={props.history}
+            refresh={refresh}
+            setRefresh={setRefresh}
           />
         );
       case 3:

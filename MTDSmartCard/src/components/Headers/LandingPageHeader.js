@@ -51,7 +51,7 @@ function LandingPageHeader(props) {
               outline
             >
               <i className="fa fa-play" />
-              Buy Product
+              Order Now
             </Button>
             <p>*No app required!</p>
           </div>
